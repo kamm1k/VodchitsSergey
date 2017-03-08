@@ -433,100 +433,92 @@ var tags = ["ДТП", "Минск", "курьезы", "apple", "слухи", "с
     "медицина", "технологии", "mwc", "sony", "Рубль", "финансы", "lenovo", "motorola", "курс валют", "тесла",
     "tesla", "авария", "автопилот", "автомобили", "расследование", "космос", "умные часы"];
 
-function getArticles(skip, top, filterConfig) {
-    var result = articles;
-    var from = skip || 0;
-    var number = top || 10;
-    if (filterConfig != undefined) {
-        if (filterConfig.author != undefined) {
-            result = result.filter(function (element) {
-                return element.author == filterConfig.author;
-            })
-        }
-        if (filterConfig.dateFrom != undefined) {
-            result = result.filter(function (element) {
-                return element.createdAt.getTime() >= filterConfig.dateFrom.getTime();
-            })
-        }
-        if (filterConfig.dateTo != undefined) {
-            result = result.filter(function (element) {
-                return element.createdAt.getTime() <= filterConfig.dateTo.getTime();
-            })
-        }
-        if (filterConfig.tags != undefined && filterConfig.tags.length != 0) {
-            result = result.filter(function (element) {
-                return filterConfig.tags.every(function (tag) {
-                    return element.tags.indexOf(tag) >= 0;
-                })
-            })
+function getArticle(id) {
+    for (var i = 0; i < articles.length; i++) {
+        if (articles[i].id == id) {
+            return articles[i];
         }
     }
-    return result.slice(from, from + number);
-}
-
-function getArticle(findId) {
-    return articles.filter(function (element) {
-        return element.id == findId;
-    })[0];
 }
 
 function validateArticle(article) {
-    if (article.title != undefined && (article.title.length > 100 || article.title.length == 0)) {
+    if (article.title === undefined || article.id === undefined || article.summary === undefined || article.createdAt === undefined
+        || article.author === undefined || article.tags === undefined || article.content === undefined) {
         return false;
-    } else if (article.tags != undefined && (article.tags.length == 0 || article.tags.length > 5)) {
-        return false;
-    } else if (article.summary != undefined && (article.summary.length == 0 || article.summary.length > 200)) {
-        return false;
-    } else if (article.tags != undefined && !article.tags.every(function (tag) {
-            if (tags.indexOf(tag) >= 0) {
-                return true;
-            } else {
-                return false;
-            }
-        })) {
-        return false;
-    } else {
-        return true;
+    }
+    else {
+        return !(article.title.length > 100 || article.summary.length > 200 || article.author === "" || article.content === "")
     }
 }
 
 function addArticle(article) {
-    var prevSize = articles.length;
-    if (!validateArticle(article)) {
-        return false;
-    } else if (prevSize == articles.push(article)) {
-        return false;
-    } else {
+    if (validateArticle(article)) {
+        articles.push(article);
         return true;
     }
-}
-
-function removeArticle(removeId) {
-    var removeIndex = articles.indexOf(getArticle(removeId));
-    if (removeIndex != -1) {
-        articles.splice(removeIndex, 1);
-        return true;
-    } else {
+    else {
         return false;
     }
 }
 
-function editArticle(editId, article) {
-    var editIndex = articles.indexOf(getArticle(editId));
-    if (!validateArticle(article) || editIndex < 0) {
-        return false;
+function addArticles(skip, top, filters) {
+    if (skip === undefined) skip = 0;
+    if (top === undefined) top = 10;
+    var result = articles;
+    if (filters != undefined) {
+        if (filters.author != undefined){
+            result = articles.filter(function (article){
+                return article.author === filters.author;
+            })
+        }
+        if (filters.createdAt != undefined){
+            result = articles.createdAt(function (article){
+                return article.createdAt === filters.createdAt;
+            })
+        }
+        if (filters.tags != undefined){
+            result = articles.createdAt(function (article){
+                return article.tags === filters.tags;
+            })
+        }
+        return articles.splice(skip, skip + top);
     }
-    if (article.title != undefined) {
-        articles[editIndex].title = article.title;
-    }
-    if (article.summary != undefined) {
-        articles[editIndex].summary = article.summary;
-    }
-    if (article.tags != undefined) {
-        articles[editIndex].tags = article.tags;
-    }
-    if (article.content != undefined) {
-        articles[editIndex].content = article.content;
-    }
-    return true;
 }
+
+function editAtricle(id, article) {
+    for (var i = 0; i < articles.length; i++) {
+        if (articles[i].id === id) {
+            if (article.title != undefined) {
+                articles[i].title = article.title;
+            }
+            if (article.content != undefined) {
+                articles[i].content = article.content;
+            }
+            if (article.summary != undefined) {
+                articles[i].summary = article.summary;
+            }
+        }
+    }
+}
+
+function removeArticle(id) {
+    for (var i = 0; i < articles.length; i++) {
+        if (articles[i].id === id) {
+            articles.slice(i, i);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+var test = {
+    id: "21",
+    title: "dsfsd",
+    summary: "qwefa",
+    createdAt: new Date(2017, 3, 6, 4, 47),
+    author: "zxc",
+    tags: ["ccc", "JDK 10", "java"],
+    content: "sdfsdfsdfsdf"
+};
