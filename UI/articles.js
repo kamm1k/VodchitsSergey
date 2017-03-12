@@ -461,27 +461,32 @@ function addArticle(article) {
     }
 }
 
-function addArticles(skip, top, filters) {
+function getArticles(skip, top, filters) {
     if (skip === undefined) skip = 0;
     if (top === undefined) top = 10;
     var result = articles;
     if (filters != undefined) {
         if (filters.author != undefined){
-            result = articles.filter(function (article){
+            result = result.filter(function (article){
                 return article.author === filters.author;
             })
         }
         if (filters.createdAt != undefined){
-            result = articles.createdAt(function (article){
+            result = result.createdAt(function (article){
                 return article.createdAt === filters.createdAt;
             })
         }
+        else {
+            result = result.filter(function (article){
+                return (article.createdAt.getTime() > filters.fromTime.getTime()) && (article.createdAt.getTime() < filters.toTime.getTime());
+            })
+        }
         if (filters.tags != undefined){
-            result = articles.createdAt(function (article){
+            result = result.createdAt(function (article){
                 return article.tags === filters.tags;
             })
         }
-        return articles.splice(skip, skip + top);
+        return result.splice(skip, skip + top);
     }
 }
 
@@ -521,4 +526,10 @@ var test = {
     author: "zxc",
     tags: ["ccc", "JDK 10", "java"],
     content: "sdfsdfsdfsdf"
+};
+
+var testFilter = {
+    fromTime: new Date(2000, 10),
+    toTime: new Date (2017,3),
+    author: "Lenin",
 };
