@@ -6,18 +6,18 @@ html {
 
 body {
     width: 100%;
+    min-width: 1024px;
     margin: auto;
     font: 12px/18px Times, serif;
     text-align: justify;
 }
-
 
 h1 {
     font: 24px/36px Times, sans-serif;
 }
 
 /*header*/
-header{
+header {
     background-color: #1669e5;
 }
 
@@ -26,6 +26,10 @@ hgroup h1 {
     padding: 20px 10px 0 50px;
     font: 40px/54px Times, sans-serif;
     color: #021026;
+}
+
+.siteName {
+    color: #01ff9e;
 }
 
 hgroup h1 a:hover {
@@ -40,7 +44,7 @@ hgroup h2 {
     color: #021026;
 }
 
-img#logo{
+img#logo {
     position: absolute;
     top: 16px;
     left: 280px;
@@ -48,7 +52,7 @@ img#logo{
     width: 50px;
 }
 
-hgroup h3{
+hgroup h3 {
     margin: 0 00px 00px 0px;
     padding: 0px 10px 10px 00px;
 }
@@ -72,12 +76,14 @@ div#name p {
 
 /*NAVIGATION*/
 
-.this{
+.this {
     background: #4f95ff;
 }
-.other{
+
+.other {
     background: #a0abbc;
 }
+
 nav#global {
     margin: 0 0 00px;
     width: 100%;
@@ -114,6 +120,7 @@ nav#global ul li a:hover {
 }
 
 /*FILTERS*/
+
 aside {
     display: inline-block;
     position: relative;
@@ -130,12 +137,12 @@ aside h1 {
     top: -25px;
     left: 2%;
 }
-aside section h2{
+
+aside section h2 {
     position: relative;
     width: 100%;
     left: 30%;
 }
-
 
 .footer {
     height: 20px;
@@ -143,21 +150,34 @@ aside section h2{
     left: 35%;
     text-align: center;
 }
-.filters{
+
+.filters {
     width: 100%;
+    min-width: 1024px;
 }
-.filters section,
-.filters h1{
+
+.filters h1 {
     display: inline-block;
     height: 20px;
     padding: 0 5px;
     border-radius: 3px;
 }
+
+.filters section {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 3px;
+}
+
 /*main*/
-.span{
+.span {
     position: relative;
     left: 3%;
 }
+
 .tags {
     padding: 0 3px;
     margin-right: 3px;
@@ -181,7 +201,8 @@ aside section h2{
     font-style: italic;
     padding-top: 15px;
 }
-.news{
+
+.news {
     position: relative;
     width: 90%;
     top: 0px;
@@ -194,14 +215,15 @@ aside section h2{
     display: block
 }
 
-.newsHead{
+.newsHead {
     position: relative;
     top: 20px;
     width: 90%;
     left: 5%;
     font: 40px/0px Times, sans-serif;
 }
-.newsText{
+
+.newsText {
     position: relative;
     width: 94%;
     left: 3%;
@@ -232,6 +254,7 @@ aside section h2{
     color: #ffffff;
     border: none;
 }
+
 A {
     text-decoration: none;
 }
