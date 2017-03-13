@@ -44,7 +44,7 @@ hgroup h2 {
     color: #021026;
 }
 
-img#logo {
+.logo {
     position: absolute;
     top: 16px;
     left: 280px;
@@ -59,14 +59,14 @@ hgroup h3 {
 
 /*USER*/
 
-div#name {
+.name {
     margin: 30px 5px;
     float: right;
     width: 180px;
     height: 30px;
 }
 
-div#name p {
+.name p {
     font: 20px/30px Times, sans-serif;
     white-space: nowrap;
     overflow: hidden;
@@ -84,12 +84,12 @@ div#name p {
     background: #a0abbc;
 }
 
-nav#global {
+.global {
     margin: 0 0 00px;
     width: 100%;
 }
 
-nav#global ul {
+.global ul {
     text-align: center;
     height: 40px;
     margin: 0 auto;
@@ -97,12 +97,12 @@ nav#global ul {
     padding: 0 25px;
 }
 
-nav#global ul li {
+.global ul li {
     position: relative;
     display: inline;
 }
 
-nav#global ul li a {
+.global ul li a {
     font-size: 14px;
     display: block;
     float: left;
@@ -113,7 +113,7 @@ nav#global ul li a {
     color: #fff;
 }
 
-nav#global ul li a:hover {
+.global ul li a:hover {
     border: none;
     border-radius: 3px;
     box-shadow: inset 100px 100px 120px #4f95ff;
@@ -178,7 +178,7 @@ aside section h2 {
     left: 3%;
 }
 
-.tags {
+.article-list-item-tags {
     padding: 0 3px;
     margin-right: 3px;
     font-variant: small-caps;
@@ -192,7 +192,7 @@ aside section h2 {
     border: none;
 }
 
-.date {
+.article-list-item-date {
     position: relative;
     left: 3%;
     width: 300px;
@@ -202,7 +202,7 @@ aside section h2 {
     padding-top: 15px;
 }
 
-.news {
+.content {
     position: relative;
     width: 90%;
     top: 0px;
@@ -215,15 +215,24 @@ aside section h2 {
     display: block
 }
 
-.newsHead {
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+.article-list-item-title {
     position: relative;
     top: 20px;
     width: 90%;
     left: 5%;
-    font: 40px/0px Times, sans-serif;
+    font: 40px/40px Times, sans-serif;
 }
 
-.newsText {
+.article-list-item-summary {
     position: relative;
     width: 94%;
     left: 3%;
