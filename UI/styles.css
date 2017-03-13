@@ -215,21 +215,19 @@ aside section h2 {
     display: block
 }
 
-.clearfix:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
-}
-
 .article-list-item-title {
     position: relative;
     top: 20px;
     width: 90%;
     left: 5%;
     font: 40px/40px Times, sans-serif;
+}
+
+.article-list-item-meta {
+    position: relative;
+    top: 20px;
+    width: 90%;
+    left: 3%;
 }
 
 .article-list-item-summary {

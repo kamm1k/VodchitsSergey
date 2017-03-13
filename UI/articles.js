@@ -489,7 +489,7 @@ var articleService = (function () {
                 })
             }
         }
-        return result.splice(skip, skip + top);
+        return result.slice(skip, skip + top);
     }
 
     function editArticle(id, article) {
@@ -612,4 +612,4 @@ var testFilter = {
     author: "Lenin",
 };
 
-renderArticles(0,4);
+renderArticles(0,5);
