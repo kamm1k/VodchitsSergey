@@ -1,3 +1,4 @@
+var user = 'DSA';
 var articleService = (function () {
     var articles = [
         {
@@ -472,12 +473,7 @@ var articleService = (function () {
                     return article.author === filters.author;
                 })
             }
-            if (filters.createdAt != undefined) {
-                result = result.createdAt(function (article) {
-                    return article.createdAt === filters.createdAt;
-                })
-            }
-            else {
+            if (filters.fromTime != undefined && filters.toTime != undefined) {
                 result = result.filter(function (article) {
                     return (article.createdAt.getTime() > filters.fromTime.getTime()) &&
                         (article.createdAt.getTime() < filters.toTime.getTime());
@@ -493,30 +489,27 @@ var articleService = (function () {
     }
 
     function editArticle(id, article) {
-        for (var i = 0; i < articles.length; i++) {
-            if (articles[i].id === id) {
-                if (article.title != undefined) {
-                    articles[i].title = article.title;
-                }
-                if (article.content != undefined) {
-                    articles[i].content = article.content;
-                }
-                if (article.summary != undefined) {
-                    articles[i].summary = article.summary;
-                }
+        var i = articles.indexOf(getArticle(id))
+        if (i != -1) {
+            if (article.title != undefined) {
+                articles[i].title = article.title;
+            }
+            if (article.content != undefined) {
+                articles[i].content = article.content;
+            }
+            if (article.summary != undefined) {
+                articles[i].summary = article.summary;
             }
         }
     }
 
-    function removeArticle(id) {
-        for (var i = 0; i < articles.length; i++) {
-            if (articles[i].id === id) {
-                articles.slice(i, i);
-                return true;
-            }
-            else {
-                return false;
-            }
+    function removeArticle(Id) {
+        var index = articles.indexOf(getArticle(Id));
+        if (index != -1) {
+            articles.splice(index, 1);
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -561,7 +554,7 @@ var articleRenderer = (function () {
         });
     }
 
-    function removeArticlesFromDom () {
+    function removeArticlesFromDom() {
         ARTICLE_LIST_NODE.innerHTML = "";
     }
 
@@ -594,17 +587,54 @@ var articleRenderer = (function () {
     };
 }());
 
+var navigationRenderer = (function(){
+    var NAVIGATION_TEMPLATE;
+    var NAVIGATION_ADD_AND_LOG_BUTTONS;
+    var USERNAME;
+
+    function init(){
+        NAVIGATION_TEMPLATE = document.querySelector("#template-addButton");
+        USERNAME = document.querySelector(".name");
+        NAVIGATION_ADD_AND_LOG_BUTTONS = document.querySelector(".buttons");
+        if(user === null) {
+            USERNAME.textContent = "Guest";
+            NAVIGATION_ADD_AND_LOG_BUTTONS.querySelector(".logButton").textContent = "Войти";
+        }
+        else {
+            USERNAME.textContent = user;
+            NAVIGATION_ADD_AND_LOG_BUTTONS.querySelector(".logButton").textContent = "Выйти";
+        }
+    }
+    return {
+        init: init,
+    };
+}());
 document.addEventListener('DOMContentLoaded', startApp());
 
 function startApp() {
     articleRenderer.init();
-    renderArticles();
+    navigationRenderer.init();
+    renderArticles(0, 5);
 }
 
 function renderArticles(skip, top, filter) {
     articleRenderer.removeArticlesFromDom();
-    var articles = articleService.getArticles(skip, top,filter);
+    var articles = articleService.getArticles(skip, top, filter);
     articleRenderer.insertArticlesInDOM(articles);
+}
+
+function addArticle(article) {
+    articleService.addArticle(article);
+    renderArticles(18, 23);
+}
+
+function removeArticle(id) {
+    articleService.removeArticle(id);
+    renderArticles(18, 23);
+}
+function editArticle(id, article) {
+    articleService.editArticle(id, article);
+    renderArticles(18, 23);
 }
 var testFilter = {
     fromTime: new Date(2000, 10),
@@ -612,4 +642,18 @@ var testFilter = {
     author: "Lenin",
 };
 
-renderArticles(0,5);
+var testAdd = {
+    id: "25",
+    title: "test",
+    summary: "test",
+    createdAt: new Date(2017, 3, 13, 6, 38),
+    author: "test",
+    tags: ["test"],
+    content: "test"
+}
+
+var testEdit = {
+    summary: "test1",
+    content: "test1",
+    title: "test1"
+}
