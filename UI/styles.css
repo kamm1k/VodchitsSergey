@@ -76,15 +76,20 @@ hgroup h3 {
 
 /*NAVIGATION*/
 
-.buttons {
 
-}
-
-.addButton{
-
-}
-
-.logButton{
+.button {
+    font-size: 14px;
+    display: block;
+    position: relative;
+    left: 3%;
+    width: 200px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    line-height: 30px;
+    padding: 0 25px;
+    background: #1669e5;
+    text-align: center;
+    color: #01ff9e;
 }
 
 .this {

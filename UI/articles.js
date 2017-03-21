@@ -1,4 +1,4 @@
-var user = 'DSA';
+var user = "dsadas";
 var articleService = (function () {
     var articles = [
         {
@@ -571,6 +571,7 @@ var articleRenderer = (function () {
         template.content.querySelector('.article-list-item-summary').textContent = article.summary;
         template.content.querySelector('.article-list-item-author').textContent = article.author;
         template.content.querySelector('.article-list-item-date').textContent = formatDate(article.createdAt);
+        template.content.querySelector('.article-list-item-tags').textContent = article.tags.toString();
 
         return template.content.querySelector('.article-list-item').cloneNode(true);
     }
@@ -596,13 +597,13 @@ var navigationRenderer = (function(){
         NAVIGATION_TEMPLATE = document.querySelector("#template-addButton");
         USERNAME = document.querySelector(".name");
         NAVIGATION_ADD_AND_LOG_BUTTONS = document.querySelector(".buttons");
-        if(user === null) {
+        if(!user) {
             USERNAME.textContent = "Guest";
-            NAVIGATION_ADD_AND_LOG_BUTTONS.querySelector(".logButton").textContent = "Войти";
+            document.getElementById('add-new-button').remove();
         }
         else {
             USERNAME.textContent = user;
-            NAVIGATION_ADD_AND_LOG_BUTTONS.querySelector(".logButton").textContent = "Выйти";
+
         }
     }
     return {
