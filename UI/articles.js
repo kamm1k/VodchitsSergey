@@ -1,4 +1,5 @@
-var user = "dsadas";
+var user = "Test";
+var page = 0;
 var articleService = (function () {
     var articles = [
         {
@@ -435,6 +436,10 @@ var articleService = (function () {
         "медицина", "технологии", "mwc", "sony", "Рубль", "финансы", "lenovo", "motorola", "курс валют", "тесла",
         "tesla", "авария", "автопилот", "автомобили", "расследование", "космос", "умные часы"];
 
+    function getNumberOfArticles() {
+        return articles.length;
+    }
+
     function getArticle(id) {
         for (var i = 0; i < articles.length; i++) {
             if (articles[i].id == id) {
@@ -444,8 +449,8 @@ var articleService = (function () {
     }
 
     function validateArticle(article) {
-        if (article.title === undefined || article.id === undefined || article.summary === undefined || article.createdAt === undefined
-            || article.author === undefined || article.tags === undefined || article.content === undefined) {
+        if (!article.title || !article.id || !article.summary || !article.createdAt
+            || !article.author || !article.tags || !article.content) {
             return false;
         }
         else {
@@ -467,19 +472,19 @@ var articleService = (function () {
         if (skip === undefined) skip = 0;
         if (top === undefined) top = 10;
         var result = articles;
-        if (filters != undefined) {
-            if (filters.author != undefined) {
+        if (filters) {
+            if (filters.author) {
                 result = result.filter(function (article) {
                     return article.author === filters.author;
                 })
             }
-            if (filters.fromTime != undefined && filters.toTime != undefined) {
+            if (filters.fromTime && filters.toTime) {
                 result = result.filter(function (article) {
                     return (article.createdAt.getTime() > filters.fromTime.getTime()) &&
                         (article.createdAt.getTime() < filters.toTime.getTime());
                 })
             }
-            if (filters.tags != undefined) {
+            if (filters.tags) {
                 result = result.createdAt(function (article) {
                     return article.tags === filters.tags;
                 })
@@ -491,13 +496,13 @@ var articleService = (function () {
     function editArticle(id, article) {
         var i = articles.indexOf(getArticle(id))
         if (i != -1) {
-            if (article.title != undefined) {
+            if (article.title) {
                 articles[i].title = article.title;
             }
-            if (article.content != undefined) {
+            if (article.content) {
                 articles[i].content = article.content;
             }
-            if (article.summary != undefined) {
+            if (article.summary) {
                 articles[i].summary = article.summary;
             }
         }
@@ -534,7 +539,8 @@ var articleService = (function () {
         addArticle: addArticle,
         getArticles: getArticles,
         editArticle: editArticle,
-        removeArticle: removeArticle
+        removeArticle: removeArticle,
+        getNumberOfArticles: getNumberOfArticles
     };
 }());
 
@@ -588,24 +594,28 @@ var articleRenderer = (function () {
     };
 }());
 
-var navigationRenderer = (function(){
+var navigationRenderer = (function () {
     var NAVIGATION_TEMPLATE;
     var NAVIGATION_ADD_AND_LOG_BUTTONS;
     var USERNAME;
 
-    function init(){
+    function init() {
         NAVIGATION_TEMPLATE = document.querySelector("#template-addButton");
         USERNAME = document.querySelector(".name");
         NAVIGATION_ADD_AND_LOG_BUTTONS = document.querySelector(".buttons");
-        if(!user) {
+        if (!user) {
             USERNAME.textContent = "Guest";
-            document.getElementById('add-new-button').remove();
+            document.getElementById('add-new-button').style.display = 'none';
+            visible = false;
         }
         else {
             USERNAME.textContent = user;
-
+            document.getElementById('add-new-button').style.display = 'block';
+            document.getElementById('logButton').textContent = 'Выйти';
+            visible = true;
         }
     }
+
     return {
         init: init,
     };
@@ -615,7 +625,7 @@ document.addEventListener('DOMContentLoaded', startApp());
 function startApp() {
     articleRenderer.init();
     navigationRenderer.init();
-    renderArticles(0, 5);
+    renderArticles(page * 5, 5);
 }
 
 function renderArticles(skip, top, filter) {
@@ -631,16 +641,15 @@ function addArticle(article) {
 
 function removeArticle(id) {
     articleService.removeArticle(id);
-    renderArticles(18, 23);
 }
 function editArticle(id, article) {
     articleService.editArticle(id, article);
-    renderArticles(18, 23);
 }
-var testFilter = {
-    fromTime: new Date(2000, 10),
-    toTime: new Date(2017, 3),
-    author: "Lenin",
+var newsFilter = {
+    fromTime: null,
+    toTime: null,
+    author: null,
+    tags: null,
 };
 
 var testAdd = {
@@ -658,3 +667,94 @@ var testEdit = {
     content: "test1",
     title: "test1"
 }
+var add_button = document.getElementById('add-new-button');
+
+function clickAddButton() {
+    console.log('Я не тупой');
+}
+
+add_button.addEventListener('click', clickAddButton);
+
+var prev_page = document.getElementById('prev-page');
+
+function clickPrev() {
+    if (page != 0) {
+        page--;
+        renderArticles(page * 5, 5, newsFilter);
+    }
+}
+
+prev_page.addEventListener('click', clickPrev);
+
+var next_page = document.getElementById('next-page');
+
+function clickNext() {
+    if (page * 5 < articleService.getNumberOfArticles() - 5) {
+        page++;
+        renderArticles(page * 5, 5, newsFilter);
+    }
+}
+
+next_page.addEventListener('click', clickNext);
+
+var logButton = document.getElementById('logButton');
+
+function log() {
+    if (!user) {
+
+    }
+    else {
+        user = null;
+        startApp();
+    }
+}
+
+logButton.addEventListener('click', log);
+
+var author = document.getElementById('author-filter');
+
+function authorFilter(e) {
+    if (e.key === "Enter") {
+        if (author.value != null) {
+            newsFilter.author = author.value;
+            console.log(author.value);
+        }
+        else {
+            newsFilter.author = undefined;
+        }
+    }
+}
+
+var tags = document.getElementById('tags-filter');
+function tagsFilter(e) {
+    if (e.key === "Enter") {
+        //newsFilter.tags = tags.value;
+        console.log(tags.value);
+    }
+}
+
+var filterButton = document.getElementById('filter-button');
+
+function filter() {
+    renderArticles(0, 5, newsFilter)
+}
+
+filterButton.addEventListener('click', filter);
+
+var fromTime = document.getElementById('fromTime');
+
+function fillFromTime() {
+    newsFilter.fromTime = new Date(fromTime.value);
+    console.log(newsFilter.fromTime.getTime());
+}
+
+fromTime.addEventListener('keydown', fillFromTime);
+
+var toTime = document.getElementById('toTime');
+
+function fillToTime() {
+    newsFilter.toTime = new Date(toTime.value);
+    console.log(newsFilter.toTime.getTime());
+}
+
+toTime.addEventListener('keydown', fillToTime);

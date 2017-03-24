@@ -82,7 +82,7 @@ hgroup h3 {
     display: block;
     position: relative;
     left: 3%;
-    width: 200px;
+    width: 300px;
     border-radius: 10px;
     text-transform: uppercase;
     line-height: 30px;
@@ -103,6 +103,12 @@ hgroup h3 {
 .global {
     margin: 0 0 00px;
     width: 100%;
+}
+.newsButtons{
+    display: -webkit-box;
+    position: relative;
+    top: 10px;
+    left: 4%;
 }
 
 .global ul {
@@ -125,13 +131,13 @@ hgroup h3 {
     text-transform: uppercase;
     line-height: 40px;
     padding: 0 35px;
-    border-radius: 3px;
+    border-radius: 3px 3px 0px 0px;
     color: #fff;
 }
 
 .global ul li a:hover {
     border: none;
-    border-radius: 3px;
+    border-radius: 3px 3px 0px 0px;
     box-shadow: inset 100px 100px 120px #4f95ff;
 }
 

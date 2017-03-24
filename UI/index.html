@@ -16,10 +16,10 @@
         <h2>Самые горячие новости только у нас</h2>
     </hgroup>
     <nav class="global">
-        <ul class = "buttons">
-            <li class = "buttons"><a href=# class="this">Главная</a></li>
-            <li class = "buttons"><a href=# id="add-new-button">Добать новость</a></li>
-            <li class = "buttons"> <a href=# class="logButton">Войти</a></li>
+        <ul>
+            <li><a href=# class="this">Главная</a></li>
+            <li><a href=# id="add-new-button">Добать новость</a></li>
+            <li><a href=# id="logButton">Войти</a></li>
         </ul>
     </nav>
     <hgroup>
@@ -31,17 +31,20 @@
         <h1>Фильтры:</h1>
         <section>
             <h2>Дата публикации:</h2>
-            <span> c <input type="date"></span>
-            <span> по <input type="date"></span>
+            <span> c <input id="fromTime" type="date"></span>
+            <span> по <input id="toTime" type="date"></span>
         </section>
         <section>
             <h2>Имя автора:</h2>
-            <span><input placeholder="Введите имя автора"></span>
+            <span><input id="author-filter" type="text" placeholder="Введите имя автора"
+                         onkeypress="return authorFilter(event)"></span>
         </section>
         <section>
             <h2>Теги:</h2>
-            <span><input placeholder="Введите тег"></span>
+            <span><input id="tags-filter" type="text" placeholder="Введите тег"
+                         onkeypress="return tagsFilter(event)"></span>
         </section>
+        <button id="filter-button">Применить</button>
     </aside>
 </div>
 <br>
@@ -53,13 +56,8 @@
     </div>
 </div>
 <div class="paginator">
-    <a href="#">Назад</a>
-    <a href="#">1</a>
-    <a href="#">2</a>
-    <span>&hellip;</span>
-    <a href="#">9</a>
-    <a href="#">10</a>
-    <a href="#">Вперёд</a>
+    <a id="prev-page" href="#">Назад</a>
+    <a id="next-page" href="#">Вперёд</a>
 </div>
 <footer>
     <p class="footer"> Hot News. Сергей Водчиц. БГУ ФПМИ 2 курс 6 группа. E-mail: sergey_vodchits@mail.ru.
@@ -74,11 +72,16 @@
         <p class="article-list-item-summary">
             Краткое описание для статьи. Тут краткое описание
         </p>
-        <a class="button" href=#>Показать полностью</a>
+
         <div class="article-list-item-meta">
             <span>Автор: <span class="article-list-item-author">Автор</span></span>
             <span>Теги: <span class="article-list-item-tags">Список тегов</span></span>
             <span>Опубликована: <span class="article-list-item-date">12.12.1995 04:35</span></span>
+            <div class="newsButtons">
+                <a class="button" href=#>Показать полностью</a>
+                <a class="button" href=#>Редактировать новость</a>
+                <a class="button" href=#>Удалить новость</a>
+            </div>
             <br>
             <br>
         </div>
