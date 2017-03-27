@@ -287,3 +287,25 @@ aside section h2 {
 A {
     text-decoration: none;
 }
+
+/*login-page*/
+.login-page {
+    width: 100%;
+    min-width: 1024px;
+}
+
+.login-page h1 {
+    display: inline-block;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 3px;
+}
+
+.login-page section {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 3px;
+}

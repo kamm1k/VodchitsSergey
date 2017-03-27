@@ -1,4 +1,4 @@
-var user = "Test";
+var user = "test";
 var page = 0;
 var articleService = (function () {
     var articles = [
@@ -578,7 +578,19 @@ var articleRenderer = (function () {
         template.content.querySelector('.article-list-item-author').textContent = article.author;
         template.content.querySelector('.article-list-item-date').textContent = formatDate(article.createdAt);
         template.content.querySelector('.article-list-item-tags').textContent = article.tags.toString();
+        if (!user) {
+            template.content.getElementById('edit-button').style.display = "none";
+            template.content.getElementById('delete-button').style.display = "none";
+        }
+        else {
+            template.content.getElementById('edit-button').style.display = "block";
+            template.content.getElementById('delete-button').style.display = "block";
+        }
+        var deleteButton = template.content.getElementById('delete-button');
+        deleteButton.addEventListener('click', deleteNews);
 
+        var editButton = template.content.getElementById('edit-button');
+        editButton.addEventListener('click', editNews);
         return template.content.querySelector('.article-list-item').cloneNode(true);
     }
 
@@ -594,6 +606,13 @@ var articleRenderer = (function () {
     };
 }());
 
+function deleteNews() {
+
+}
+
+function editNews() {
+
+}
 var navigationRenderer = (function () {
     var NAVIGATION_TEMPLATE;
     var NAVIGATION_ADD_AND_LOG_BUTTONS;
@@ -606,6 +625,7 @@ var navigationRenderer = (function () {
         if (!user) {
             USERNAME.textContent = "Guest";
             document.getElementById('add-new-button').style.display = 'none';
+            document.getElementById('logButton').textContent = 'Войти';
             visible = false;
         }
         else {
@@ -628,6 +648,10 @@ function startApp() {
     renderArticles(page * 5, 5);
 }
 
+
+function validateArticle(article) {
+    return articleService.validateArticle(article);
+}
 function renderArticles(skip, top, filter) {
     articleRenderer.removeArticlesFromDom();
     var articles = articleService.getArticles(skip, top, filter);
@@ -652,6 +676,7 @@ var newsFilter = {
     tags: null,
 };
 
+
 var testAdd = {
     id: "25",
     title: "test",
@@ -669,8 +694,43 @@ var testEdit = {
 }
 var add_button = document.getElementById('add-new-button');
 
+var id = 20;
+
 function clickAddButton() {
-    console.log('Я не тупой');
+    var newNews = {
+        id: null,
+        title: null,
+        summary: null,
+        createdAt: null,
+        author: null,
+        tags: ["onlyfortest"],
+        content: null
+    }
+    newNews.createdAt = new Date();
+    newNews.author = user;
+    var CONTENT = document.querySelector('.content');
+    var ADD_TEMPLATE = document.querySelector('#template-add-news-page');
+    CONTENT.innerHTML = "";
+    CONTENT.appendChild(ADD_TEMPLATE.content.querySelector('.add-news-page').cloneNode(true));
+    document.getElementById('filters').style.display = 'none';
+    var addButton = document.getElementById('add-button');
+
+    function add() {
+        id++;
+        newNews.id = id;
+        var title = document.getElementById('title');
+        var summary = document.getElementById('summary');
+        var newsContent = document.getElementById('newsContent');
+        newNews.title = title.value;
+        newNews.summary = summary.value;
+        newNews.content = newsContent.value;
+        validateArticle(newNews);
+        addArticle(newNews);
+        renderArticles(0, 5);
+        document.getElementById('filters').style.display = 'block';
+    }
+
+    if (addButton) addButton.addEventListener('click', add);
 }
 
 add_button.addEventListener('click', clickAddButton);
@@ -701,7 +761,13 @@ var logButton = document.getElementById('logButton');
 
 function log() {
     if (!user) {
-
+        var CONTENT = document.querySelector('.content');
+        var LOGIN_TEMPLATE = document.querySelector('#template-login-page');
+        CONTENT.innerHTML = "";
+        CONTENT.appendChild(LOGIN_TEMPLATE.content.querySelector('.login-page').cloneNode(true));
+        document.getElementById('filters').style.display = 'none';
+        var loginButton = document.getElementById('login-button');
+        if (loginButton) loginButton.addEventListener('click', login);
     }
     else {
         user = null;
@@ -709,19 +775,26 @@ function log() {
     }
 }
 
+function login() {
+    var login = document.getElementById('login');
+    var password = document.getElementById('password');
+    user = login.value;
+    navigationRenderer.init();
+    renderArticles(0, 5);
+    document.getElementById('filters').style.display = 'block';
+}
+
 logButton.addEventListener('click', log);
 
 var author = document.getElementById('author-filter');
 
-function authorFilter(e) {
-    if (e.key === "Enter") {
-        if (author.value != null) {
-            newsFilter.author = author.value;
-            console.log(author.value);
-        }
-        else {
-            newsFilter.author = undefined;
-        }
+function authorFilter() {
+    if (author.value != null) {
+        newsFilter.author = author.value;
+        console.log(author.value);
+    }
+    else {
+        newsFilter.author = undefined;
     }
 }
 
@@ -736,6 +809,9 @@ function tagsFilter(e) {
 var filterButton = document.getElementById('filter-button');
 
 function filter() {
+    fillToTime();
+    fillFromTime();
+    authorFilter();
     renderArticles(0, 5, newsFilter)
 }
 
@@ -744,17 +820,28 @@ filterButton.addEventListener('click', filter);
 var fromTime = document.getElementById('fromTime');
 
 function fillFromTime() {
-    newsFilter.fromTime = new Date(fromTime.value);
-    console.log(newsFilter.fromTime.getTime());
+    if (fromTime.value) {
+        newsFilter.fromTime = new Date(fromTime.value);
+        console.log(newsFilter.fromTime.getTime());
+    }
+    else (newsFilter.fromTime = undefined);
 }
-
-fromTime.addEventListener('keydown', fillFromTime);
 
 var toTime = document.getElementById('toTime');
 
 function fillToTime() {
-    newsFilter.toTime = new Date(toTime.value);
-    console.log(newsFilter.toTime.getTime());
+    if (toTime.value) {
+        newsFilter.toTime = new Date(toTime.value);
+        console.log(newsFilter.toTime.getTime());
+    }
+    else (newsFilter.toTime = undefined);
 }
 
-toTime.addEventListener('keydown', fillToTime);
+var mainPage = document.getElementById('main-page');
+
+function renderMain() {
+    renderArticles(0, 5);
+    document.getElementById('filters').style.display = 'block';
+}
+
+mainPage.addEventListener('click', renderMain)
