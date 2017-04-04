@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Hot News</title>
+    <script src="articles.js" async></script>
+</head>
+<body>
+<header>
+    <div class="user">
+        <div class="name"><p>UserName</p></div>
+    </div>
+    <hgroup>
+        <h1><a href=# class="siteName">Hot News</a></h1>
+        <img src="images\logo.png" class="logo">
+        <h2>Самые горячие новости только у нас</h2>
+    </hgroup>
+    <nav class="global">
+        <ul>
+            <li><a href=# id="main-page" class="this">Главная</a></li>
+            <li><a href=# id="add-new-button">Добать новость</a></li>
+            <li><a href=# id="logButton">Войти</a></li>
+        </ul>
+    </nav>
+    <hgroup>
+        <h3 class="this"></h3>
+    </hgroup>
+</header>
+<div class="filters" id="filters">
+    <aside>
+        <h1>Фильтры:</h1>
+        <section>
+            <h2>Дата публикации:</h2>
+            <span> c <input id="fromTime" type="date"></span>
+            <span> по <input id="toTime" type="date"></span>
+        </section>
+        <section>
+            <h2>Имя автора:</h2>
+            <span><input id="author-filter" type="text" placeholder="Введите имя автора"></span>
+        </section>
+        <section>
+            <h2>Теги:</h2>
+            <span><input id="tags-filter" type="text" placeholder="Введите тег"></span>
+        </section>
+        <button id="filter-button">Применить</button>
+    </aside>
+</div>
+<br>
+<br>
+<br>
+<div>
+    <div class="content">
+
+    </div>
+</div>
+<div class="paginator">
+    <a id="prev-page" href="#">Назад</a>
+    <a id="next-page" href="#">Вперёд</a>
+</div>
+<footer>
+    <p class="footer"> Hot News. Сергей Водчиц. БГУ ФПМИ 2 курс 6 группа. E-mail: sergey_vodchits@mail.ru.
+        27.02.2017</p>
+</footer>
+<!-- templates -->
+<template id="template-article-list-item">
+    <div class="article-list-item" dataset="id">
+        <h3 class="article-list-item-title">
+            Заголовок статьи
+        </h3>
+        <p class="article-list-item-summary">
+            Краткое описание для статьи. Тут краткое описание
+        </p>
+        <div class="article-list-item-meta">
+            <span>Автор: <span class="article-list-item-author">Автор</span></span>
+            <span>Теги: <span class="article-list-item-tags">Список тегов</span></span>
+            <span>Опубликована: <span class="article-list-item-date">12.12.1995 04:35</span></span>
+            <div class="newsButtons">
+                <a class="button" id="show-button" href=#>Показать полностью</a>
+                <a class="button" id="edit-button" href=#>Редактировать новость</a>
+                <a class="button" id="delete-button" href=#>Удалить новость</a>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+</template>
+<template id="template-login-page">
+    <div class="login-page" data-id="id">
+        <h1>
+            Введите логин и пароль:
+        </h1>
+        <section>
+            <h2>Логин:</h2>
+            <span><input id="login" type="text" placeholder="Логин"></span>
+        </section>
+        <section>
+            <h2>Пароль:</h2>
+            <span><input id="password" type="password" placeholder="Пароль"></span>
+        </section>
+        <button id="login-button">Войти</button>
+    </div>
+</template>
+<template id="template-add-news-page">
+    <div class="add-news-page" data-id="id">
+        <h1>
+            Добавление новости:
+        </h1>
+        <section>
+            <h2>Заглавие новости:</h2>
+            <span><textarea id="title" type="text" placeholder="Заглавие новости" style="width: 99.53%"
+                            maxlength="100"></textarea></span>
+        </section>
+        <section>
+            <h2>Краткое описание:</h2>
+            <span><textarea id="summary" type="text" placeholder="Краткое описание" style="width: 99.53%"
+                            maxlength="200" rows="2"></textarea></span>
+        </section>
+        <section>
+            <h2>Текст новости:</h2>
+            <span><textarea id="newsContent" type="text" placeholder="Текст новости" style="width: 99.53%"
+                            rows="10"></textarea></span>
+        </section>
+        <br>
+        <button id="add-button">Добавить новость</button>
+    </div>
+</template>
+<template id="template-edit-page">
+    <div class="edit-page" data-id="id">
+        <h1>
+            Редактирование новости:
+        </h1>
+        <section>
+            <h2>Заглавие новости:</h2>
+            <span><textarea id="title" type="text" style="width: 99.53%" maxlength="100"></textarea></span>
+        </section>
+        <section>
+            <h2>Краткое описание:</h2>
+            <span><textarea id="summary" type="text" style="width: 99.53%" maxlength="200" rows="2"></textarea></span>
+        </section>
+        <section>
+            <h2>Текст новости:</h2>
+            <span><textarea id="newsContent" type="text" style="width: 99.53%" rows="10"></textarea></span>
+        </section>
+        <br>
+        <button id="edit-button">Изменить</button>
+    </div>
+</template>
+<template id="template-news-page">
+    <div class="news-page" data-id="id">
+        <h1 id="title">
+
+        </h1>
+        <br>
+        <h2 id="newsContent">
+
+        </h2>
+        <br>
+    </div>
+</template>
+</body>
+</html>

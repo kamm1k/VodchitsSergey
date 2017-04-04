@@ -1,0 +1,311 @@
+/*typography*/
+
+html {
+    background-color: rgb(241, 241, 241);
+}
+
+body {
+    width: 100%;
+    min-width: 1024px;
+    margin: auto;
+    font: 12px/18px Times, serif;
+    text-align: justify;
+}
+
+h1 {
+    font: 24px/36px Times, sans-serif;
+}
+
+/*header*/
+header {
+    background-color: #1669e5;
+}
+
+hgroup h1 {
+    margin: 00px 00px 0 50px;
+    padding: 20px 10px 0 50px;
+    font: 40px/54px Times, sans-serif;
+    color: #021026;
+}
+
+.siteName {
+    color: #01ff9e;
+}
+
+hgroup h1 a:hover {
+    border: none;
+}
+
+hgroup h2 {
+    margin: 0 10px 0 10px;
+    padding: 0 10px 10px 10px;
+    border-top: 0;
+    font: 25px/20px Times, sans-serif;
+    color: #021026;
+}
+
+.logo {
+    position: absolute;
+    top: 16px;
+    left: 280px;
+    height: 50px;
+    width: 50px;
+}
+
+hgroup h3 {
+    margin: 0 00px 00px 0px;
+    padding: 0px 10px 10px 00px;
+}
+
+/*USER*/
+
+.name {
+    margin: 30px 5px;
+    float: right;
+    width: 180px;
+    height: 30px;
+}
+
+.name p {
+    font: 20px/30px Times, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #444444;
+}
+
+/*NAVIGATION*/
+
+
+.button {
+    font-size: 14px;
+    display: block;
+    position: relative;
+    left: 3%;
+    width: 300px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    line-height: 30px;
+    padding: 0 25px;
+    background: #1669e5;
+    text-align: center;
+    color: #01ff9e;
+}
+
+.this {
+    background: #4f95ff;
+}
+
+.other {
+    background: #a0abbc;
+}
+
+.global {
+    margin: 0 0 00px;
+    width: 100%;
+}
+.newsButtons{
+    display: -webkit-box;
+    position: relative;
+    top: 10px;
+    left: 4%;
+}
+
+.global ul {
+    text-align: center;
+    height: 40px;
+    margin: 0 auto;
+    display: table;
+    padding: 0 25px;
+}
+
+.global ul li {
+    position: relative;
+    display: inline;
+}
+
+.global ul li a {
+    font-size: 14px;
+    display: block;
+    float: left;
+    text-transform: uppercase;
+    line-height: 40px;
+    padding: 0 35px;
+    border-radius: 3px 3px 0px 0px;
+    color: #fff;
+}
+
+.global ul li a:hover {
+    border: none;
+    border-radius: 3px 3px 0px 0px;
+    box-shadow: inset 100px 100px 120px #4f95ff;
+}
+
+/*FILTERS*/
+
+aside {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    float: left;
+    padding: 0 0px;
+    background: #cfdff7;
+    border-radius: 3px;
+}
+
+aside h1 {
+    position: relative;
+    width: 22%;
+    top: -25px;
+    left: 2%;
+}
+
+aside section h2 {
+    position: relative;
+    width: 100%;
+    left: 30%;
+}
+
+.footer {
+    height: 20px;
+    bottom: 0%;
+    left: 35%;
+    text-align: center;
+}
+
+.filters {
+    width: 100%;
+    min-width: 1024px;
+}
+
+.filters h1 {
+    display: inline-block;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 3px;
+}
+
+.filters section {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 3px;
+}
+
+/*main*/
+.span {
+    position: relative;
+    left: 3%;
+}
+
+.article-list-item-tags {
+    padding: 0 3px;
+    margin-right: 3px;
+    font-variant: small-caps;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+.tags:hover {
+    box-shadow: inset 100px 100px 120px #4f95ff;
+    color: #ffffff;
+    border: none;
+}
+
+.article-list-item-date {
+    position: relative;
+    left: 3%;
+    width: 300px;
+    height: 30px;
+    font-size: 16px;
+    font-style: italic;
+    padding-top: 15px;
+}
+
+.content {
+    position: relative;
+    width: 90%;
+    top: 0px;
+    left: 5%;
+    background: #cfdff7;
+    border-radius: 5px;
+}
+
+.newLine {
+    display: block
+}
+
+.article-list-item-title {
+    position: relative;
+    top: 20px;
+    width: 90%;
+    left: 5%;
+    font: 40px/40px Times, sans-serif;
+}
+
+.article-list-item-meta {
+    position: relative;
+    top: 20px;
+    width: 90%;
+    left: 3%;
+}
+
+.article-list-item-summary {
+    position: relative;
+    width: 94%;
+    left: 3%;
+}
+
+/* Paginator */
+
+.paginator {
+    position: relative;
+    top: 5%;
+    bottom: 5%;
+    width: 50%;
+    left: 46%;
+    padding: 10px;
+}
+
+.paginator a,
+.paginator span {
+    display: inline-block;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 5px;
+    background: #cfdff7;
+}
+
+.paginator a:hover {
+    box-shadow: inset 100px 100px 120px #4f95ff;
+    color: #ffffff;
+    border: none;
+}
+
+A {
+    text-decoration: none;
+}
+
+/*login-page*/
+.login-page {
+    width: 100%;
+    min-width: 1024px;
+}
+
+.login-page h1 {
+    display: inline-block;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 3px;
+}
+
+.login-page section {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 3px;
+}

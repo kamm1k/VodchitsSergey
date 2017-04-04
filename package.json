@@ -1,0 +1,23 @@
+{
+  "name": "kamm1k",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.15.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kamm1k/VodchitsSergey.git"
+  },
+  "author": "kamm1k",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kamm1k/VodchitsSergey/issues"
+  },
+  "homepage": "https://github.com/kamm1k/VodchitsSergey#readme"
+}
