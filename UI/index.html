@@ -63,7 +63,7 @@
 </footer>
 <!-- templates -->
 <template id="template-article-list-item">
-    <div class="article-list-item" data-id="id">
+    <div class="article-list-item" dataset="id">
         <h3 class="article-list-item-title">
             Заголовок статьи
         </h3>
@@ -122,6 +122,39 @@
         </section>
         <br>
         <button id="add-button">Добавить новость</button>
+    </div>
+</template>
+<template id="template-edit-page">
+    <div class="edit-page" data-id="id">
+        <h1>
+            Редактирование новости:
+        </h1>
+        <section>
+            <h2>Заглавие новости:</h2>
+            <span><textarea id="title" type="text" style="width: 99.53%" maxlength="100"></textarea></span>
+        </section>
+        <section>
+            <h2>Краткое описание:</h2>
+            <span><textarea id="summary" type="text" style="width: 99.53%" maxlength="200" rows="2"></textarea></span>
+        </section>
+        <section>
+            <h2>Текст новости:</h2>
+            <span><textarea id="newsContent" type="text" style="width: 99.53%" rows="10"></textarea></span>
+        </section>
+        <br>
+        <button id="edit-button">Изменить</button>
+    </div>
+</template>
+<template id="template-news-page">
+    <div class="news-page" data-id="id">
+        <h1 id="title">
+
+        </h1>
+        <br>
+        <h2 id="newsContent">
+
+        </h2>
+        <br>
     </div>
 </template>
 </body>

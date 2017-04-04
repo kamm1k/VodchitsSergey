@@ -1,4 +1,4 @@
-var user = JSON.parse(sessionStorage.getItem("user"));
+var user = JSON.parse(localStorage.getItem("user"));
 var page = 0;
 var articlesArray = [
     {
@@ -612,11 +612,7 @@ var articleRenderer = (function () {
             template.content.getElementById('edit-button').style.display = "block";
             template.content.getElementById('delete-button').style.display = "block";
         }
-        var deleteButton = template.content.getElementById('delete-button');
-        deleteButton.addEventListener('click', deleteNews);
 
-        var editButton = template.content.getElementById('edit-button');
-        editButton.addEventListener('click', editNews);
         return template.content.querySelector('.article-list-item').cloneNode(true);
     }
 
@@ -691,6 +687,7 @@ function addArticle(article) {
 
 function removeArticle(id) {
     articleService.removeArticle(id);
+    renderArticles(5*page,5);
 }
 function editArticle(id, article) {
     articleService.editArticle(id, article);
@@ -797,6 +794,7 @@ function log() {
     }
     else {
         user = null;
+        localStorage.setItem("user", JSON.stringify(user));
         startApp();
     }
 }
@@ -805,6 +803,7 @@ function login() {
     var login = document.getElementById('login');
     var password = document.getElementById('password');
     user = login.value;
+    localStorage.setItem("user", JSON.stringify(user));
     navigationRenderer.init();
     renderArticles(0, 5);
     document.getElementById('filters').style.display = 'block';
@@ -871,3 +870,48 @@ function renderMain() {
 }
 
 mainPage.addEventListener('click', renderMain)
+
+document.querySelector('.content').addEventListener('click', handleNewsClick);
+
+function handleNewsClick(event){
+    if (event.target.textContent == "Удалить новость") {
+    removeArticle(event.target.parentNode.parentNode.parentNode.dataset.id);
+    alert("Новость с id: " + event.target.parentNode.parentNode.parentNode.dataset.id + " удалена")
+    }
+    if (event.target.textContent == "Показать полностью") {
+        var news = articleService.getArticle(event.target.parentNode.parentNode.parentNode.dataset.id);
+        var CONTENT = document.querySelector('.content');
+        var ADD_TEMPLATE = document.querySelector('#template-news-page');
+        CONTENT.innerHTML = "";
+        CONTENT.appendChild(ADD_TEMPLATE.content.querySelector('.news-page').cloneNode(true));
+        document.getElementById('filters').style.display = 'none';
+        document.getElementById('title').textContent = news.title;
+        document.getElementById('newsContent').textContent = news.content;
+    }
+    if (event.target.textContent == "Редактировать новость") {
+        var editNews = articleService.getArticle(event.target.parentNode.parentNode.parentNode.dataset.id);
+        var CONTENT = document.querySelector('.content');
+        var ADD_TEMPLATE = document.querySelector('#template-edit-page');
+        CONTENT.innerHTML = "";
+        CONTENT.appendChild(ADD_TEMPLATE.content.querySelector('.edit-page').cloneNode(true));
+        document.getElementById('filters').style.display = 'none';
+        var editButton = document.getElementById('edit-button');
+        document.getElementById('title').textContent = editNews.title;
+        document.getElementById('summary').textContent = editNews.summary;
+        document.getElementById('newsContent').textContent = editNews.content;
+
+        function edit() {
+            var title = document.getElementById('title');
+            var summary = document.getElementById('summary');
+            var newsContent = document.getElementById('newsContent');
+            editNews.title = title.value;
+            editNews.summary = summary.value;
+            editNews.content = newsContent.value;
+            editArticle(event.target.parentNode.parentNode.parentNode.dataset.id,editNews);
+            renderArticles(0, 5);
+            document.getElementById('filters').style.display = 'block';
+        }
+
+        if (editButton) editButton.addEventListener('click', edit);
+    }
+}
