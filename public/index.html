@@ -98,6 +98,7 @@
             <span><input id="password" type="password" placeholder="Пароль"></span>
         </section>
         <button id="login-button">Войти</button>
+        <button id="registration-button">Зарегистрироваться</button>
     </div>
 </template>
 <template id="template-add-news-page">
@@ -131,27 +132,27 @@
         </h1>
         <section>
             <h2>Заглавие новости:</h2>
-            <span><textarea id="title" type="text" style="width: 99.53%" maxlength="100"></textarea></span>
+            <span><textarea id="title-edit" type="text" style="width: 99.53%" maxlength="100"></textarea></span>
         </section>
         <section>
             <h2>Краткое описание:</h2>
-            <span><textarea id="summary" type="text" style="width: 99.53%" maxlength="200" rows="2"></textarea></span>
+            <span><textarea id="summary-edit" type="text" style="width: 99.53%" maxlength="200" rows="2"></textarea></span>
         </section>
         <section>
             <h2>Текст новости:</h2>
-            <span><textarea id="newsContent" type="text" style="width: 99.53%" rows="10"></textarea></span>
+            <span><textarea id="newsContent-edit" type="text" style="width: 99.53%" rows="10"></textarea></span>
         </section>
         <br>
-        <button id="edit-button">Изменить</button>
+        <button id="edit-button-confirm">Изменить</button>
     </div>
 </template>
 <template id="template-news-page">
     <div class="news-page" data-id="id">
-        <h1 id="title">
+        <h1 id="title-full">
 
         </h1>
         <br>
-        <h2 id="newsContent">
+        <h2 id="newsContent-full">
 
         </h2>
         <br>
