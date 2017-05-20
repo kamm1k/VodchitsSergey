@@ -8,6 +8,12 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
+const articleController = require(__dirname + '/private/controller/article-controller');
+const userController = require(__dirname + '/private/controller/user-controller');
+
+let MongoDBStore = require('connect-mongodb-session')(session);
+let store = new MongoDBStore({uri: 'mongodb://localhost:27017/db', collection: 'sessions'});
+
 const articles = [
   {
     id: '1',
@@ -455,15 +461,14 @@ passport.use('local', new LocalStrategy(
 
     console.log(users);
 
-    const user = users.find(user => username === user.username);
+   userController.getUserByName(username).exec((err, user) => {
 
-    console.log(user);
+     if (!user) return done(null, false);
 
-    if (!user) return done(null, false);
+     if (user.password !== password) return done(null, false);
 
-    if (user.password !== password) return done(null, false);
-
-    return done(null, user);
+     return done(null, user);
+   });
   }));
 
 passport.serializeUser((user, done) => {
@@ -490,16 +495,20 @@ app.use(session({
   name: 'Serg',
   secret: 'wild',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store: store
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 app.get('/articles', (req, res) => {
-  res.send(articles);
+
+  articleController.load().exec((err, articles) => {
+    res.send(articles);
+  });
+
+  //res.send(articles);
 });
 
 app.get('/users', (req, res) => {
@@ -507,10 +516,12 @@ app.get('/users', (req, res) => {
 });
 
 app.post('/article', (req, res) => {
+
   const article = req.body;
   article.createdAt = new Date(article.createdAt);
-  articles.push(article);
-  res.send({ status: 'ok' });
+  articleController.add(article).then((err, article) => {
+    res.send({ status: 'ok' });
+  });
 });
 
 app.post('/users', passport.authenticate('local'), (req, res) => {
@@ -528,11 +539,10 @@ app.delete('/logout', (req, res) => {
 });
 
 app.delete('/id', (req, res) => { // /articles/:id req.params.id
-  const index = articles.indexOf(getArticle(req.body));
-  if (index !== -1) {
-    articles.splice(index, 1);
-  }
-  res.end();
+
+  articleController.remove({id: req.body.id}).then((err) => {
+    res.end();
+  });
 });
 
 app.listen(3228, () => {

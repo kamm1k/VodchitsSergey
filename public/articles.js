@@ -45,9 +45,11 @@ const requestService = (function () {
 
   function removeArticle(id) {
     return new Promise((resolve, reject) => {
-      xhr.open('DELETE', 'id', false);
+      xhr.open('DELETE', 'id', true);
+      console.log('asdfasdf');
       xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.send(JSON.stringify(id));
+      xhr.send(JSON.stringify({id: id}));
+
       xhr.onload = function () {
         getArticles();
       };
@@ -391,7 +393,7 @@ function log() {
 
     xhr.onload = () => {
       user = undefined;
-      navigationRenderer.init();
+      startApp();
     };
   }
 }
